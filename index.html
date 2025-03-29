@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pitch Practice</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Top control bar -->
+        <div class="control-bar">
+            <!-- Language selector -->
+            <div class="language-selector">
+                <button data-lang="zh">中文</button>
+                <button data-lang="en">English</button>
+                <button data-lang="ja">日本語</button>
+            </div>
+            
+            <!-- Dark mode toggle -->
+            <button id="dark-mode-toggle" class="dark-mode-toggle" data-i18n="darkMode">Dark Mode</button>
+            
+            <!-- Counter display -->
+            <div class="counter">
+                <span id="correct-count">0</span> ✓ / 
+                <span id="wrong-count">0</span> ✗
+            </div>
+        </div>
+        
+        <!-- Keyboard note names toggle -->
+        <div class="key-label-toggle">
+            <button id="toggle-labels" data-i18n="hideNoteNames">Hide Note Names</button>
+        </div>
+        
+        <!-- Main logo -->
+        <div id="logo" class="logo">
+            <h1 data-i18n="title">Pitch Practice</h1>
+            <p data-i18n="clickToStart">Click to Start</p>
+        </div>
+        
+        <!-- Countdown display -->
+        <div id="countdown" class="countdown hidden">
+            <div id="countdown-number">3</div>
+        </div>
+        
+        <!-- Piano keyboard (simplified, only white keys) -->
+        <div id="piano" class="piano">
+            <div class="keys">
+                <div class="key white" data-note="C"><span>C</span></div>
+                <div class="key white" data-note="D"><span>D</span></div>
+                <div class="key white" data-note="E"><span>E</span></div>
+                <div class="key white" data-note="F"><span>F</span></div>
+                <div class="key white" data-note="G"><span>G</span></div>
+                <div class="key white" data-note="A"><span>A</span></div>
+                <div class="key white" data-note="B"><span>B</span></div>
+                <div class="key white" data-note="C2"><span>C</span></div>
+            </div>
+        </div>
+        
+        <!-- Feedback area -->
+        <div id="feedback" class="feedback hidden">
+            <div id="feedback-text"></div>
+            <div id="timer" data-i18n="timeLeft">Time left: 10s</div>
+            <button id="continue-btn" class="hidden" data-i18n="continue">Continue</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

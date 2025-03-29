@@ -1,0 +1,375 @@
+:root {
+    --bg-color: #f5f5f5;
+    --text-color: #333;
+    --white-key: white;
+    --active-white: #ddd;
+    --panel-bg: rgba(255, 255, 255, 0.9);
+    --panel-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    --button-bg: #fff;
+    --button-border: #ddd;
+    --button-hover: #eee;
+    --correct-color: #2ecc71;
+    --incorrect-color: #e74c3c;
+    --primary-color: #3498db;
+    --primary-hover: #2980b9;
+}
+
+.dark-mode {
+    --bg-color: #1a1a1a;
+    --text-color: #f0f0f0;
+    --white-key: #2d2d2d;
+    --active-white: #444;
+    --panel-bg: rgba(40, 40, 40, 0.9);
+    --panel-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    --button-bg: #333;
+    --button-border: #444;
+    --button-hover: #444;
+    --correct-color: #27ae60;
+    --incorrect-color: #c0392b;
+    --primary-color: #2980b9;
+    --primary-hover: #3498db;
+}
+
+/* 基础样式 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 顶部控制栏 */
+.control-bar {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 100;
+}
+
+/* 语言选择器 */
+.language-selector {
+    display: flex;
+    gap: 5px;
+}
+
+.language-selector button {
+    background: var(--button-bg);
+    color: var(--text-color);
+    border: 1px solid var(--button-border);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9em;
+}
+
+.language-selector button:hover {
+    background: var(--button-hover);
+}
+
+/* 夜间模式切换 */
+.dark-mode-toggle {
+    background: var(--button-bg);
+    color: var(--text-color);
+    border: 1px solid var(--button-border);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9em;
+    margin-left: auto;
+    margin-right: 15px;
+}
+
+.dark-mode-toggle:hover {
+    background: var(--button-hover);
+}
+
+/* 计数显示 */
+.counter {
+    font-size: 1.1em;
+    background: var(--panel-bg);
+    padding: 5px 10px;
+    border-radius: 4px;
+    box-shadow: var(--panel-shadow);
+}
+
+/* 键盘音名开关 */
+.key-label-toggle {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    z-index: 100;
+}
+
+.key-label-toggle button {
+    background: var(--button-bg);
+    color: var(--text-color);
+    border: 1px solid var(--button-border);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.key-label-toggle button:hover {
+    background: var(--button-hover);
+}
+
+/* LOGO样式 */
+.logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    z-index: 10;
+}
+
+.logo h1 {
+    font-size: 3em;
+    color: var(--text-color);
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo p {
+    font-size: 1.5em;
+    color: var(--text-color);
+    margin: 10px 0 0;
+    opacity: 0.8;
+}
+
+/* 倒计时 */
+.countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.countdown.hidden {
+    display: none;
+}
+
+#countdown-number {
+    font-size: 3em;
+    color: white;
+    font-weight: bold;
+}
+
+/* 钢琴键盘 */
+.piano {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    pointer-events: none;
+    touch-action: manipulation;
+}
+
+.piano.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto;
+}
+
+.piano.disabled {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.keys {
+    display: flex;
+    position: relative;
+    height: 220px;
+}
+
+.key {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.key span {
+    font-weight: bold;
+    user-select: none;
+    pointer-events: none;
+}
+
+.white {
+    width: 60px;
+    height: 200px;
+    background-color: var(--white-key);
+    border: 1px solid var(--button-border);
+    border-radius: 0 0 5px 5px;
+}
+
+.white.active {
+    background-color: var(--active-white);
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+}
+
+/* 反馈区域 */
+.feedback {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 1.5em;
+    color: var(--text-color);
+    background-color: var(--panel-bg);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: var(--panel-shadow);
+    z-index: 5;
+    width: 80%;
+    max-width: 400px;
+}
+
+#feedback-text {
+    margin-bottom: 15px;
+    min-height: 1.5em;
+}
+
+.correct {
+    color: var(--correct-color);
+}
+
+.incorrect {
+    color: var(--incorrect-color);
+}
+
+.hidden {
+    display: none;
+}
+
+/* 继续按钮 */
+#continue-btn {
+    margin-top: 15px;
+    padding: 8px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#continue-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+/* 动画 */
+@keyframes fadeOut {
+    from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    to { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+}
+
+.logo.fade-out {
+    animation: fadeOut 0.5s forwards;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    .control-bar {
+        flex-wrap: wrap;
+        top: 5px;
+        padding: 0 10px;
+    }
+    
+    .language-selector {
+        order: 1;
+    }
+    
+    .dark-mode-toggle {
+        order: 3;
+        margin: 5px 0;
+    }
+    
+    .counter {
+        order: 2;
+    }
+    
+    .key-label-toggle {
+        top: 90px;
+        right: 10px;
+    }
+    
+    .logo h1 {
+        font-size: 2em;
+    }
+    
+    .logo p {
+        font-size: 1.2em;
+    }
+    
+    .white {
+        width: 12%;
+        height: 180px;
+        min-width: 40px;
+    }
+    
+    .feedback {
+        font-size: 1.2em;
+        top: 150px;
+        width: 90%;
+        padding: 15px;
+    }
+    
+    #countdown-number {
+        font-size: 2.5em;
+    }
+}
+
+@media (max-height: 600px) {
+    .white {
+        height: 150px;
+    }
+    
+    .feedback {
+        top: 80px;
+    }
+}
